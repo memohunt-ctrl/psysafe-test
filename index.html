@@ -21,22 +21,37 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             padding: 25px;
             margin-top: 40px;
             border-radius: 16px;
             backdrop-filter: blur(8px);
             display: inline-block;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
             box-shadow: 0 8px 18px rgba(0,0,0,0.3);
         }
 
-        #uid-box {
+        #latest {
             margin-top: 20px;
             font-size: 22px;
             padding: 15px;
             border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        table {
+            margin-top: 25px;
+            width: 100%;
+            color: white;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        th {
             background: rgba(255,255,255,0.2);
         }
 
@@ -48,11 +63,23 @@
 </head>
 <body>
 
-    <h1>PsySafe – نظام سوار المرضى</h1>
+    <h1>PsySafe – نظام السوار الذكي</h1>
 
     <div class="card">
-        <h2>معرّف NFC</h2>
-        <div id="uid-box">مرّر السوار على الجهاز…</div>
+        <h2>آخر قراءة</h2>
+        <div id="latest">مرّر سوار NFC…</div>
+
+        <h3 style="margin-top:25px;">آخر 5 قراءات</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>الوقت</th>
+                    <th>النوع</th>
+                </tr>
+            </thead>
+            <tbody id="history"></tbody>
+        </table>
     </div>
 
     <footer>
@@ -60,9 +87,31 @@
     </footer>
 
     <script>
-        function receiveUID(uid) {
-            document.getElementById("uid-box").innerHTML =
-                "UID: " + uid;
+        let records = [];
+
+        function receiveUID(uid, type, time) {
+
+            document.getElementById("latest").innerHTML =
+                "UID: " + uid + "<br>الوقت: " + time + "<br>النوع: " + type;
+
+            records.unshift({ uid: uid, type: type, time: time });
+
+            if (records.length > 5) {
+                records.pop();
+            }
+
+            let html = "";
+            records.forEach(r => {
+                html += `
+                    <tr>
+                        <td>${r.uid}</td>
+                        <td>${r.time}</td>
+                        <td>${r.type}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById("history").innerHTML = html;
         }
     </script>
 
