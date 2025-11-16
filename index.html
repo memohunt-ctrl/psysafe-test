@@ -3,43 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PsySafe NFC – Test Page</title>
+    <title>PsySafe NFC Reader</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: "Tahoma", sans-serif;
+            color: white;
             text-align: center;
             padding: 40px;
-            background: #f5f5f5;
             direction: rtl;
         }
+
         h1 {
-            color: #2c3e50;
+            margin-top: 20px;
+            font-size: 32px;
         }
-        .box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin-top: 40px;
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
             display: inline-block;
-            margin-top: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+        }
+
+        #uid-box {
+            margin-top: 20px;
+            font-size: 22px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        footer {
+            margin-top: 40px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-    <h1>مرحبًا بك في صفحة اختبار PsySafe NFC</h1>
+    <h1>PsySafe – نظام سوار المرضى</h1>
 
-    <div class="box">
-        <p>هذه صفحة مؤقتة للتجربة.</p>
-        <p>عند قراءة NFC سيقوم التطبيق بإرسال UID هنا عبر JavaScript.</p>
-
-        <h3 id="uid-display" style="color:#27ae60;">لا يوجد UID بعد</h3>
+    <div class="card">
+        <h2>معرّف NFC</h2>
+        <div id="uid-box">مرّر السوار على الجهاز…</div>
     </div>
+
+    <footer>
+        تصميم: PsySafe ID Band
+    </footer>
 
     <script>
         function receiveUID(uid) {
-            document.getElementById("uid-display").innerHTML =
-                "UID المستلم: " + uid;
+            document.getElementById("uid-box").innerHTML =
+                "UID: " + uid;
         }
     </script>
 
